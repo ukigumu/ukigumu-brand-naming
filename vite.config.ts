@@ -2,7 +2,7 @@ import react from "@vitejs/plugin-react"
 import type { IncomingMessage, ServerResponse } from "node:http"
 import { defineConfig, type Connect, type PreviewServer, type ViteDevServer } from "vite"
 
-const SAFE_LABEL = /^[a-z0-9]{1,63}$/
+const VERISIGN_PATH_LABEL = /^[a-z0-9]{1,63}$/
 const RDAP_URL = "https://rdap.verisign.com/com/v1/domain"
 
 function writeStatus(res: ServerResponse, httpStatus: number, upstreamStatus: number): void {
@@ -20,7 +20,7 @@ async function handleRdap(req: IncomingMessage, res: ServerResponse): Promise<vo
 
   const url = new URL(req.url ?? "", "http://localhost")
   const label = url.searchParams.get("label") ?? ""
-  if (!SAFE_LABEL.test(label)) {
+  if (!VERISIGN_PATH_LABEL.test(label)) {
     writeStatus(res, 400, 400)
     return
   }
