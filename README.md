@@ -1,31 +1,50 @@
-# .com availability checker
+# Ukigumu brand naming
 
-Paste names. The page checks whether each matching .com is registered.
+Paste names. The page checks whether each matching `.com` is registered, using Verisign RDAP.
+
+No AI. One page. You type a list, it normalizes each token to a DNS label, then asks Verisign if `{label}.com` exists.
+
+**Live test:** [https://ukigumu-brand-naming.pages.dev](https://ukigumu-brand-naming.pages.dev)
 
 ## How to run
 
+You need Node 20 or newer and [pnpm](https://pnpm.io/).
+
 ```
-npm i
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
-Open the URL Vite prints.
+Open the URL Vite prints (usually `http://localhost:5173`).
 
 ## How to build
 
 ```
-npm run build
+pnpm run build
 ```
 
-`npm run build` writes static files to `dist/`.
+`pnpm run build` writes static files to `dist/`.
 
-## How to put this on Cloudflare Pages
+## Cloudflare Pages
 
-Connect the GitHub repo in the Cloudflare Pages dashboard. Set the build command to `npm run build`. Set the output directory to `dist`. Pages picks up the `functions/` directory automatically. `functions/api/rdap.ts` serves `/api/rdap`.
+Connect this GitHub repo in the Cloudflare Pages dashboard.
+
+- Framework preset: none
+- Build command: `pnpm run build`
+- Output directory: `dist`
+- Package manager: pnpm
+
+Pages picks up the `functions/` directory automatically. `functions/api/rdap.ts` serves `/api/rdap`.
 
 Do not buy a domain. The `*.pages.dev` URL is enough.
 
-If you are already logged in on a machine, run `npm run build`. Then run `npx wrangler pages deploy dist`.
+If `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are already in the environment, deploy from a machine:
+
+```
+pnpm run deploy
+```
+
+That runs `pnpm run build` and then `wrangler pages deploy dist --project-name ukigumu-brand-naming`. Do not paste tokens into the repo or into chat.
 
 ## API
 
@@ -41,6 +60,6 @@ An empty DNS answer is not available. A failed fetch is unknown, never available
 
 ## CORS proxy
 
-The browser calls `/api/rdap?label={label}`. Locally, Vite middleware fetches Verisign. That is the supported `npm run dev` path. In production, the Pages Function at `functions/api/rdap.ts` fetches Verisign. You do not depend on Verisign sending CORS headers.
+The browser calls `/api/rdap?label={label}`. Locally, Vite middleware fetches Verisign. That is the supported `pnpm run dev` path. In production, the Pages Function at `functions/api/rdap.ts` fetches Verisign. You do not depend on Verisign sending CORS headers.
 
 The proxy only forwards labels that match `^[a-z0-9]{1,63}$`. Anything else is 400 and is not sent upstream.
