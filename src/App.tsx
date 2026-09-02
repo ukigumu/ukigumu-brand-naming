@@ -108,7 +108,11 @@ export default function App() {
 
   return (
     <main>
-      <h1>.com availability</h1>
+      <h1>Ukigumu brand naming</h1>
+      <p className="lede">
+        Paste names. The page checks whether each matching .com is registered,
+        using Verisign RDAP.
+      </p>
       <textarea
         value={input}
         onChange={(event) => setInput(event.target.value)}
