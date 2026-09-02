@@ -8,7 +8,7 @@ No AI. One page. You type a list, it normalizes each token to a DNS label, then 
 
 ## How to run
 
-You need Node 20 or newer and [pnpm](https://pnpm.io/).
+This repo uses pnpm only. You need Node 20 or newer and [pnpm](https://pnpm.io/).
 
 ```
 pnpm install
