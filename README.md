@@ -44,7 +44,7 @@ If `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are already in the environ
 pnpm run deploy
 ```
 
-That runs `pnpm run build` and then `wrangler pages deploy dist --project-name ukigumu-brand-naming`. Do not paste tokens into the repo or into chat.
+That runs `pnpm run build` and then `wrangler pages deploy dist --project-name ukigumu-brand-naming --branch main`. Do not paste tokens into the repo or into chat.
 
 ## API
 
